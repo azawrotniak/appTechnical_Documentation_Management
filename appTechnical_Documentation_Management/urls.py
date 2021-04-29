@@ -26,4 +26,10 @@ urlpatterns = [
     path('add_material/', ex_view.AddMaterialView.as_view(), name="add-material"),
     path('add_machine/', ex_view.AddMachineView.as_view(), name="add-machine"),
     path('add_element/', ex_view.AddElementView.as_view(), name="add-element"),
+    path('vendor_list/', ex_view.VendorList.as_view(), name="vendor-list"),
+    path('service_list/', ex_view.ServiceList.as_view(), name="service-list"),
+    path('tool_list/', ex_view.ToolList.as_view(), name="tool-list"),
+    path('material_list/', ex_view.MaterialList.as_view(), name="material-list"),
+    path('machine_list/', ex_view.MachinelList.as_view(), name="material-list"),
+    path('element_list/', ex_view.ElementlList.as_view(), name="element-list"),
 ]

@@ -1,4 +1,4 @@
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 
 from .forms import ElementForm, MachineForm, MaterialForm, ServiceForm, ToolForm, VendorForm
 from .models import Element, Machine, Material, Service, Tool, Vendor
@@ -40,3 +40,25 @@ class AddElementView(CreateView):
     template_name = 'machining/add_element.html'
 
 
+class VendorList(ListView):
+    model = Vendor
+
+
+class ServiceList(ListView):
+    model = Service
+
+
+class ToolList(ListView):
+    model = Tool
+
+
+class MaterialList(ListView):
+    model = Material
+
+
+class MachinelList(ListView):
+    model = Machine
+
+
+class ElementlList(ListView):
+    model = Element

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <ul>
+    {% for tool in tool_list %}
+        <li>{{ tool.name }} - {{ tool.kind }} - {{ tool.size }} - {{ tool.number_tiles }} - {{ tool.height }} -
+            {{ tool.vendor }}
+        </li>
+    {% endfor%}
+    </ul>
+
+{% endblock %}

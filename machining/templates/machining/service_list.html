@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <ul>
+    {% for service in service_list %}
+        <li>{{ service.name }} - {{ service.address }} - {{ service.phone }} - {{ service.tax_number }}</li>
+    {% endfor%}
+    </ul>
+
+{% endblock %}

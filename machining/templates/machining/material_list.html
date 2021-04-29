@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <ul>
+    {% for material in material_list %}
+        <li>{{ material.name }} - {{ material.symbol }}</li>
+    {% endfor%}
+    </ul>
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <ul>
+    {% for element in element_list %}
+        <li>{{ element.name }} - {{ element.version }} - {{ element.material }} - {{ element.machine }}
+            - {{ element.tool }}
+        </li>
+    {% endfor%}
+    </ul>
+
+{% endblock %}

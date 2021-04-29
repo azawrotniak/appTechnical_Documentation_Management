@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <ul>
+    {% for machine in machine_list %}
+        <li>{{ machine.name }} - {{ machine.manufacturer }} - {{ machine.type }} - {{ machine.serial_number }}
+            - {{ machine.service }} - {{ machine.vendor }}
+        </li>
+    {% endfor%}
+    </ul>
+
+{% endblock %}
