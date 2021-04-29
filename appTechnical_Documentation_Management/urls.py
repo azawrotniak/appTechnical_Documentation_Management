@@ -16,6 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from machining import views as ex_view
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('add_vendor/', ex_view.AddVendorView.as_view(), name="add-vendor"),
+    path('add_service/', ex_view.AddServiceView.as_view(), name="add-service"),
+    path('add_tool/', ex_view.AddToolView.as_view(), name="add-tool"),
+    path('add_material/', ex_view.AddMaterialView.as_view(), name="add-material"),
+    path('add_machine/', ex_view.AddMachineView.as_view(), name="add-machine"),
+    path('add_element/', ex_view.AddElementView.as_view(), name="add-element"),
 ]
