@@ -1,7 +1,8 @@
 from django.views import View
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from django.urls import reverse_lazy
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.core.files.storage import FileSystemStorage
 
 from .forms import ElementForm, MachineForm, MaterialForm, ServiceForm, ToolForm, VendorForm
 from .models import Element, Machine, Material, Service, Tool, Vendor
@@ -47,11 +48,28 @@ class AddMachineView(CreateView):
     success_url = reverse_lazy('machine-list')
 
 
-class AddElementView(CreateView):
-    model = Element
-    form_class = ElementForm
+# class AddElementView(CreateView):
+#     model = Element
+#     form_class = ElementForm
+#     template_name = 'machining/add_element.html'
+#     success_url = reverse_lazy('element-list')
+
+class AddElementView(View):
     template_name = 'machining/add_element.html'
-    success_url = reverse_lazy('element-list')
+    form_class = ElementForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        context = {
+            'form': form
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('element-list')
 
 
 class VendorList(ListView):

@@ -68,6 +68,7 @@ class Element(models.Model):
     material = models.ForeignKey(Material, on_delete=models.CASCADE)
     machine = models.ForeignKey(Machine, on_delete=models.CASCADE)
     tool = models.ManyToManyField(Tool)
+    model3D = models.FileField(upload_to='models/', blank=True)
 
     def __str__(self):
         return self.name

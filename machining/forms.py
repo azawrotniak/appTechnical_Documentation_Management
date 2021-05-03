@@ -74,7 +74,7 @@ class MaterialForm(forms.ModelForm):
 class ElementForm(forms.ModelForm):
     class Meta:
         model = Element
-        fields = ['name', 'version', 'material', 'machine', 'tool']
+        fields = ['name', 'version', 'material', 'machine', 'tool', 'model3D']
 
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -82,4 +82,5 @@ class ElementForm(forms.ModelForm):
             'material': forms.Select(attrs={'class': 'form-control'}),
             'machine': forms.Select(attrs={'class': 'form-control'}),
             'tool': forms.SelectMultiple(attrs={'class': 'form-control'}),
+
         }

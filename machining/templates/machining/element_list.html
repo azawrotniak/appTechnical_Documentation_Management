@@ -22,6 +22,7 @@
                     <td>{{ element.version }}</td>
                     <td>{{ element.material }}</td>
                     <td>{{ element.machine }}</td>
+                    <td>{{ element.model3D }}</td>
                     <td>
                         <a class="bi bi-file-bar-graph-fill" href="{% url 'update-element' pk=element.pk %}" role="button" title="Details"></a>
                         <a class="bi bi-pencil-fill" href="{% url 'update-element' pk=element.pk %}" role="button" title="Edit"></a>
