@@ -1,6 +1,5 @@
 from django.db import models
 
-
 TYPE_MACHINE = (
     (1, "Milling"),
     (2, "Lathe"),
@@ -35,6 +34,9 @@ class Machine(models.Model):
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.name
+
 
 class Tool(models.Model):
     name = models.CharField(max_length=64)
@@ -44,13 +46,20 @@ class Tool(models.Model):
     height = models.DecimalField(max_digits=5, decimal_places=1)
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.name
+
 
 class Material(models.Model):
     name = models.CharField(max_length=64)
     symbol = models.CharField(max_length=32)
 
+    @property
+    def material_name(self):
+        return "{} {}".format(self.name, self.symbol)
+
     def __str__(self):
-        return self.name
+        return self.material_name
 
 
 class Element(models.Model):
@@ -59,3 +68,6 @@ class Element(models.Model):
     material = models.ForeignKey(Material, on_delete=models.CASCADE)
     machine = models.ForeignKey(Machine, on_delete=models.CASCADE)
     tool = models.ManyToManyField(Tool)
+
+    def __str__(self):
+        return self.name

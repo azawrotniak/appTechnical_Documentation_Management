@@ -1,13 +1,39 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-    <ul>
-    {% for tool in tool_list %}
-        <li>{{ tool.name }} - {{ tool.kind }} - {{ tool.size }} - {{ tool.number_tiles }} - {{ tool.height }} -
-            {{ tool.vendor }}
-        </li>
-    {% endfor%}
-    </ul>
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><a class="bi bi-plus-square-fill" style="font-size:22px;" href="{% url 'add-tool' %}" role="button" title="New"></a></th>
+                <th>Name<input type="text" class="form-control" id="usr"></th>
+                <th>Kind<input type="text" class="form-control" id="usr"></th>
+                <th>Size<input type="text" class="form-control" id="usr"></th>
+                <th>Number tiles<input type="text" class="form-control" id="usr"></th>
+                <th>Height<input type="text" class="form-control" id="usr"></th>
+                <th>Vendor<input type="text" class="form-control" id="usr"></th>
+                <th><button type="button" class="btn">Search</button></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for tool in tool_list %}
+                <tr>
+                    <td>{{  forloop.counter }}</td>
+                    <td>{{ tool.name }}</td>
+                    <td>{{ tool.kind }}</td>
+                    <td>{{ tool.size }}</td>
+                    <td>{{ tool.number_tiles }}</td>
+                    <td>{{ tool.height }}</td>
+                    <td>{{ tool.vendor }}</td>
+                    <td>
+                        <a class="bi bi-file-bar-graph-fill" href="{% url 'update-tool' pk=tool.pk %}" role="button" title="Details"></a>
+                        <a class="bi bi-pencil-fill" href="{% url 'update-tool' pk=tool.pk %}" role="button" title="Edit"></a>
+                        <a class="bi bi-trash-fill" href="{% url 'delete-tool' pk=tool.pk %}" role="button" title="Remove"></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}

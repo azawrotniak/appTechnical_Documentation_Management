@@ -1,13 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-    <ul>
-    {% for machine in machine_list %}
-        <li>{{ machine.name }} - {{ machine.manufacturer }} - {{ machine.type }} - {{ machine.serial_number }}
-            - {{ machine.service }} - {{ machine.vendor }}
-        </li>
-    {% endfor%}
-    </ul>
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><a class="bi bi-plus-square-fill" style="font-size:22px;" href="{% url 'add-machine' %}" role="button" title="New"></a></th>
+                <th>Name<input type="text" class="form-control" id="usr"></th>
+                <th>Manufacturer<input type="text" class="form-control" id="usr"></th>
+                <th>Type<input type="text" class="form-control" id="usr"></th>
+                <th>Service<input type="text" class="form-control" id="usr"></th>
+                <th><button type="button" class="btn">Search</button></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for machine in machine_list %}
+                <tr>
+                    <td>{{  forloop.counter }}</td>
+                    <td>{{ machine.name }}</td>
+                    <td>{{ machine.manufacturer }}</td>
+                    <td>{{ machine.type }}</td>
+                    <td>{{ machine.service }}</td>
+                    <td>
+                        <a class="bi bi-file-bar-graph-fill" href="{% url 'update-machine' pk=machine.pk %}" role="button" title="Details"></a>
+                        <a class="bi bi-pencil-fill" href="{% url 'update-machine' pk=machine.pk %}" role="button" title="Edit"></a>
+                        <a class="bi bi-trash-fill" href="{% url 'delete-machine' pk=machine.pk %}" role="button" title="Remove"></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}

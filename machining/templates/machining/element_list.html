@@ -1,13 +1,36 @@
 {% extends 'base.html' %}
 
-{% block content %}
 
-    <ul>
-    {% for element in element_list %}
-        <li>{{ element.name }} - {{ element.version }} - {{ element.material }} - {{ element.machine }}
-            - {{ element.tool }}
-        </li>
-    {% endfor%}
-    </ul>
+{% block content %}
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><a class="bi bi-plus-square-fill" style="font-size:22px;" href="{% url 'add-element' %}" role="button" title="New"></a></th>
+                <th>Name<input type="text" class="form-control" id="usr"></th>
+                <th>Version<input type="text" class="form-control" id="usr"></th>
+                <th>Material<input type="text" class="form-control" id="usr"></th>
+                <th>Machine<input type="text" class="form-control" id="usr"></th>
+                <th><button type="button" class="btn">Search</button></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for element in element_list %}
+                <tr>
+                    <td>{{  forloop.counter }}</td>
+                    <td>{{ element.name }}</td>
+                    <td>{{ element.version }}</td>
+                    <td>{{ element.material }}</td>
+                    <td>{{ element.machine }}</td>
+                    <td>
+                        <a class="bi bi-file-bar-graph-fill" href="{% url 'update-element' pk=element.pk %}" role="button" title="Details"></a>
+                        <a class="bi bi-pencil-fill" href="{% url 'update-element' pk=element.pk %}" role="button" title="Edit"></a>
+                        <a class="bi bi-trash-fill" href="{% url 'delete-element' pk=element.pk %}" role="button" title="Remove"></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}

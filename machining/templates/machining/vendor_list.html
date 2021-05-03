@@ -1,11 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-    <ul>
-    {% for vendor in vendor_list %}
-        <li>{{ vendor.name }} - {{ vendor.address }} - {{ vendor.phone }} - {{ vendor.tax_number }}</li>
-    {% endfor%}
-    </ul>
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><a class="bi bi-plus-square-fill" style="font-size:22px;" href="{% url 'add-vendor' %}" role="button" title="New"></a></th>
+                <th>Name<input type="text" class="form-control" id="usr"></th>
+                <th>Address<input type="text" class="form-control" id="usr"></th>
+                <th>Phone<input type="text" class="form-control" id="usr"></th>
+                <th>Tax number<input type="text" class="form-control" id="usr"></th>
+                <th><button type="button" class="btn">Search</button></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for vendor in vendor_list %}
+                <tr>
+                    <td>{{  forloop.counter }}</td>
+                    <td>{{ vendor.name }}</td>
+                    <td>{{ vendor.address }}</td>
+                    <td>{{ vendor.phone }}</td>
+                    <td>{{ vendor.tax_number }}</td>
+                    <td>
+                        <a class="bi bi-file-bar-graph-fill" href="{% url 'update-vendor' pk=vendor.pk %}" role="button" title="Details"></a>
+                        <a class="bi bi-pencil-fill" href="{% url 'update-vendor' pk=vendor.pk %}" role="button" title="Edit"></a>
+                        <a class="bi bi-trash-fill" href="{% url 'delete-vendor' pk=vendor.pk %}" role="button" title="Remove"></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}
