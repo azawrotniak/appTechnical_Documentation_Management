@@ -3,78 +3,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Documentation Management</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Documentation Management</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 </head>
 <body>
-    <nav class="navbar navbar-inverse">
-        <div class="navbar-header">
-          <div class="navbar-brand">
-            <a class="i bi-house-door-fill" href="{% url 'home' %}" title="Home"></a>
-          </div>
+<nav class="navbar navbar-inverse">
+    <div class="navbar-header">
+        <div class="navbar-brand">
+            <a class="i bi-house-door-fill text-muted" href="{% url 'home' %}" title="Home"></a>
         </div>
-        <ul class="nav navbar-nav">
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Machining
+    </div>
+    <ul class="nav navbar-nav">
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Machining
                 <span class="caret"></span>
-              </a>
-                <ul class="dropdown-menu">
-                    <li><a tabindex="-1" href="{% url 'element-list' %}">Element</a></li>
-                    <li><a tabindex="-1" href="{% url 'machine-list' %}">Machine</a></li>
-                    <li><a tabindex="-1" href="{% url 'material-list' %}">Material</a></li>
-                    <li><a tabindex="-1" href="{% url 'tool-list' %}">Tool</a></li>
-                    <li><a tabindex="-1" href="{% url 'service-list' %}">Service</a></li>
-                    <li><a tabindex="-1" href="{% url 'vendor-list' %}">Vendor</a></li>
-                </ul>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Login <span class="glyphicon glyphicon-log-in"></span></a>
-              <div class="dropdown-menu">
+            </a>
+            <ul class="dropdown-menu">
+                <li><a tabindex="-1" href="{% url 'element-list' %}">Element</a></li>
+                <li><a tabindex="-1" href="{% url 'machine-list' %}">Machine</a></li>
+                <li><a tabindex="-1" href="{% url 'material-list' %}">Material</a></li>
+                <li><a tabindex="-1" href="{% url 'tool-list' %}">Tool</a></li>
+                <li><a tabindex="-1" href="{% url 'service-list' %}">Service</a></li>
+                <li><a tabindex="-1" href="{% url 'vendor-list' %}">Vendor</a></li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Login <span
+                class="glyphicon glyphicon-log-in"></span></a>
+            <div class="dropdown-menu">
                 <form id="formLogin" class="form container-fluid">
-                  <div class="form-group">
-                    <label for="usr">Name:</label>
-                    <input type="text" class="form-control" id="usr">
-                  </div>
-                  <div class="form-group">
-                    <label for="pwd">Password:</label>
-                    <input type="password" class="form-control" id="pwd">
-                  </div>
-                  <button type="button" id="btnLogin" class="btn btn-block">Login</button>
+                    <div class="form-group">
+                        <label for="usr">Name:</label>
+                        <input type="text" class="form-control" id="usr">
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Password:</label>
+                        <input type="password" class="form-control" id="pwd">
+                    </div>
+                    <button type="button" id="btnLogin" class="btn btn-block">Login</button>
                 </form>
                 <div class="container-fluid">
-                  <br>
-                  <a class="small" href="#">Forgot password?</a>
+                    <br>
+                    <a class="small" href="#">Forgot password?</a>
                 </div>
-              </div>
-            </li>
-        </ul>
-    </nav>
+            </div>
+        </li>
+    </ul>
+</nav>
 
-
-{#        <div class="col-sm-2 sidenav">#}
-{#            <ul class="navbar">#}
-{#                <li><a tabindex="-1" href="{% url 'element-list' %}" role="button" >Element</a></li>#}
-{#                <li><a tabindex="-1" href="{% url 'machine-list' %}" role="button" >Machine</a></li>#}
-{#                <li><a tabindex="-1" href="{% url 'material-list' %}" role="button" >Material</a></li>#}
-{#                <li><a tabindex="-1" href="{% url 'tool-list' %}" role="button" >Tool</a></li>#}
-{#                <li><a tabindex="-1" href="{% url 'service-list' %}" role="button" >Service</a></li>#}
-{#                <li><a tabindex="-1" href="{% url 'vendor-list' %}" role="button" >Vendor</a></li>#}
-{#            </ul>#}
-{#        </div>#}
-
-
-
-    {% block content %}
-    {% endblock %}
-
+{% block content %}
+{% endblock %}
 
 </body>
+{% block script %}
+{% endblock %}
 </html>

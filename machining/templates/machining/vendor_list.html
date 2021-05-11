@@ -1,7 +1,25 @@
 {% extends 'base.html' %}
 
+{% load widget_tweaks %}
+
 {% block content %}
     <div class="container">
+        <form method="get">
+{#            {{ filter.form.as_table }}#}
+
+          {{ filter.form.name.label_tag }}
+          {% render_field filter.form.name class="form-control" %}
+
+          {{ filter.form.address.label_tag }}
+          {% render_field filter.form.address class="form-control" %}
+
+          {{ filter.form.phone.label_tag }}
+          {% render_field filter.form.phone class="form-control" %}
+
+          {{ filter.form.tax_number.label_tag }}
+          {% render_field filter.form.tax_number class="form-control" %}
+            <button type="submit">Search</button>
+        </form>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -10,19 +28,19 @@
                 <th>Address<input type="text" class="form-control" id="usr"></th>
                 <th>Phone<input type="text" class="form-control" id="usr"></th>
                 <th>Tax number<input type="text" class="form-control" id="usr"></th>
-                <th><button type="button" class="btn">Search</button></th>
+                <th class="text-right"><button type="button" class="btn">Search</button></th>
             </tr>
             </thead>
             <tbody>
-            {% for vendor in vendor_list %}
+            {% for vendor in filter.qs %}
                 <tr>
                     <td>{{  forloop.counter }}</td>
                     <td>{{ vendor.name }}</td>
                     <td>{{ vendor.address }}</td>
                     <td>{{ vendor.phone }}</td>
                     <td>{{ vendor.tax_number }}</td>
-                    <td>
-                        <a class="bi bi-file-bar-graph-fill" href="{% url 'update-vendor' pk=vendor.pk %}" role="button" title="Details"></a>
+                    <td class="text-right">
+                        <a class="bi bi-file-bar-graph-fill" href="{% url 'vendor-detail' pk=vendor.pk %}" role="button" title="Details"></a>
                         <a class="bi bi-pencil-fill" href="{% url 'update-vendor' pk=vendor.pk %}" role="button" title="Edit"></a>
                         <a class="bi bi-trash-fill" href="{% url 'delete-vendor' pk=vendor.pk %}" role="button" title="Remove"></a>
                     </td>
@@ -30,6 +48,27 @@
             {% endfor %}
             </tbody>
         </table>
+        <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li><a href="?page=1">&laquo; first</a></li>
+                    <li><a href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+                {% endif %}
+
+                {% if page_obj.number > 1 %}
+                    <li><a href="#">{{ page_obj.number|add:-1 }}</a></li>
+                {% endif %}
+
+                    <li class="active"><a href="#">{{ page_obj.number }}</a></li>
+
+                {% if page_obj.number < page_obj.paginator.num_pages %}
+                    <li><a href="#">{{ page_obj.number|add:1 }}</a></li>
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}">next</a></li>
+                    <li><a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
+                {% endif %}
+        </ul>
     </div>
 
 {% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="container">
+        <strong>Name: </strong> {{ tool.name }} <br>
+        <strong>Kind: </strong> {{ tool.kind }} <br>
+        <strong>Size: </strong> {{ tool.size }} <br>
+        <strong>Height: </strong> {{ tool.height }} <br>
+        <strong>Number tiles: </strong> {{ tool.number_tiles }} <br>
+        <strong>Vendor: </strong> {{ tool.vendor }} <br>
+        <strong>Status: </strong> {{ tool.status }} <br>
+    </div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="container">
+        <strong>Name: </strong> {{ service.name }} <br>
+        <strong>Tax number: </strong> {{ service.tax_number }} <br>
+        <strong>Address: </strong> {{ service.address }} <br>
+        <strong>Phone: </strong> {{ service.phone }} <br>
+    </div>
+{% endblock %}

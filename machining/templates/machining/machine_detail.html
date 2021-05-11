@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="container">
+        <strong>Name: </strong> {{ machine.name}} <br>
+        <strong>Type: </strong> {{ machine.type }} <br>
+        <strong>Serial number: </strong> {{ machine.serial_number }} <br>
+        <strong>Manufacturer: </strong> {{ machine.manufacturer }} <br>
+        <strong>Vendor: </strong> {{ machine.vendor }} <br>
+        <strong>Service: </strong> {{ machine.service }} <br>
+    </div>
+
+
+{% endblock %}

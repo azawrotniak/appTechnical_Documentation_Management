@@ -1,11 +1,12 @@
 from django.views import View
-from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from django.views.generic import DetailView, CreateView, DeleteView, ListView, UpdateView
+from django.views.generic.detail import SingleObjectMixin
 from django.urls import reverse_lazy
-from django.shortcuts import render, redirect
-from django.core.files.storage import FileSystemStorage
+from django.shortcuts import get_object_or_404, render, redirect
 
-from .forms import ElementForm, MachineForm, MaterialForm, ServiceForm, ToolForm, VendorForm
-from .models import Element, Machine, Material, Service, Tool, Vendor
+from .forms import AttachmentForm, ElementForm, MachineForm, MaterialForm, ServiceForm, ToolForm, VendorForm
+from .models import Attachment, Element, Machine, Material, Service, Tool, Vendor
+from .filters import ElementFilter, MachineFilter, MaterialFilter, ServiceFilter, ToolFilter, VendorFilter
 
 
 class HomeView(View):
@@ -48,12 +49,6 @@ class AddMachineView(CreateView):
     success_url = reverse_lazy('machine-list')
 
 
-# class AddElementView(CreateView):
-#     model = Element
-#     form_class = ElementForm
-#     template_name = 'machining/add_element.html'
-#     success_url = reverse_lazy('element-list')
-
 class AddElementView(View):
     template_name = 'machining/add_element.html'
     form_class = ElementForm
@@ -73,27 +68,63 @@ class AddElementView(View):
 
 
 class VendorList(ListView):
+    paginate_by = 20
     model = Vendor
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = VendorFilter(self.request.GET, queryset=self.get_queryset())
+        return context
 
 
 class ServiceList(ListView):
+    paginate_by = 20
     model = Service
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = ServiceFilter(self.request.GET, queryset=self.get_queryset())
+        return context
 
 
 class ToolList(ListView):
+    paginate_by = 20
     model = Tool
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = ToolFilter(self.request.GET, queryset=self.get_queryset())
+        return context
 
 
 class MaterialList(ListView):
+    paginate_by = 20
     model = Material
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = MaterialFilter(self.request.GET, queryset=self.get_queryset())
+        return context
 
 
 class MachineList(ListView):
+    paginate_by = 20
     model = Machine
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = MachineFilter(self.request.GET, queryset=self.get_queryset())
+        return context
 
 
 class ElementList(ListView):
+    paginate_by = 20
     model = Element
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = ElementFilter(self.request.GET, queryset=self.get_queryset())
+        return context
 
 
 class VendorUpdate(UpdateView):
@@ -166,3 +197,66 @@ class MachineDelete(DeleteView):
 class ElementDelete(DeleteView):
     model = Element
     success_url = reverse_lazy('element-list')
+
+
+class AddAttachmentView(View):
+    template_name = 'machining/add_attachment.html'
+    form_class = AttachmentForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        context = {
+            'form': form
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        element = get_object_or_404(Element, pk=kwargs['pk'])
+        form = self.form_class(request.POST, request.FILES)
+        if form.is_valid():
+            attachment = Attachment()
+            attachment.description = form.cleaned_data['description']
+            attachment.type = form.cleaned_data['type']
+            attachment.file = request.FILES['file']
+            attachment.element = element
+            attachment.save()
+
+            return redirect('element-detail', pk=kwargs['pk'])
+
+
+class ElementDetailView(DetailView):
+    model = Element
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
+class AttachmentDelete(DeleteView, SingleObjectMixin):
+    model = Attachment
+    pk_url_kwarg = 'pk'
+
+    def get_success_url(self):
+        success_url = reverse_lazy('element-detail',
+                                   kwargs={'pk': self.kwargs['e_pk']})
+        return success_url
+
+
+class MachineDetailView(DetailView):
+    model = Machine
+
+
+class MaterialDetailView(DetailView):
+    model = Material
+
+
+class ServiceDetailView(DetailView):
+    model = Service
+
+
+class ToolDetailView(DetailView):
+    model = Tool
+
+
+class VendorDetailView(DetailView):
+    model = Vendor

@@ -1,8 +1,19 @@
 from django.db import models
 
+TYPE_DOCUMENT = (
+    (1, "Drawing"),
+    (2, "Document"),
+    (3, "G-code"),
+)
+
 TYPE_MACHINE = (
     (1, "Milling"),
     (2, "Lathe"),
+)
+
+STATUS = (
+    (1, "Active"),
+    (2, "Inactive"),
 )
 
 
@@ -40,6 +51,7 @@ class Machine(models.Model):
 
 class Tool(models.Model):
     name = models.CharField(max_length=64)
+    status = models.IntegerField(choices=STATUS, default=1, blank=True)
     kind = models.CharField(max_length=32)
     size = models.DecimalField(max_digits=4, decimal_places=2)
     number_tiles = models.IntegerField()
@@ -72,3 +84,13 @@ class Element(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Attachment(models.Model):
+    description = models.CharField(max_length=64, blank=True)
+    type = models.IntegerField(choices=TYPE_DOCUMENT, blank=True)
+    file = models.FileField(upload_to='documents/', blank=True)
+    element = models.ForeignKey(Element, on_delete=models.CASCADE, blank=True)
+
+    def __str__(self):
+        return self.description

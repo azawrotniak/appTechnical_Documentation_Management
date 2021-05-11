@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Element, Machine, Material, Service, Tool, Vendor
+from .models import Attachment, Element, Machine, Material, Service, Tool, Vendor
 
 
 class ServiceForm(forms.ModelForm):
@@ -44,14 +44,14 @@ class MachineForm(forms.ModelForm):
         }
 
 
-
 class ToolForm(forms.ModelForm):
     class Meta:
         model = Tool
-        fields = ['name', 'kind', 'size', 'number_tiles', 'height', 'vendor']
+        fields = ['name', 'status', 'kind', 'size', 'number_tiles', 'height', 'vendor']
 
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
             'kind': forms.TextInput(attrs={'class': 'form-control'}),
             'size': forms.NumberInput(attrs={'class': 'form-control', 'step': 0.01}),
             'number_tiles': forms.NumberInput(attrs={'class': 'form-control'}),
@@ -83,4 +83,15 @@ class ElementForm(forms.ModelForm):
             'machine': forms.Select(attrs={'class': 'form-control'}),
             'tool': forms.SelectMultiple(attrs={'class': 'form-control'}),
 
+        }
+
+
+class AttachmentForm(forms.ModelForm):
+    class Meta:
+        model = Attachment
+        fields = ['description', 'type', 'file']
+
+        widgets = {
+            'description': forms.TextInput(attrs={'class': 'form-control'}),
+            'type': forms.Select(attrs={'class': 'form-control'}),
         }

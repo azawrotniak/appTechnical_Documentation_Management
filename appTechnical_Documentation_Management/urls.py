@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from machining import views as ex_view
 
@@ -42,8 +44,20 @@ urlpatterns = [
     path('machining/vendor/<int:pk>/delete/', ex_view.VendorDelete.as_view(), name="delete-vendor"),
     path('machining/service/<int:pk>/delete/', ex_view.ServiceDelete.as_view(), name="delete-service"),
     path('machining/tool/<int:pk>/delete/', ex_view.ToolDelete.as_view(), name="delete-tool"),
-    path('machining/material/<int:pk>/delete/', ex_view.MaterialUpdate.as_view(), name="delete-material"),
-    path('machining/machine/<int:pk>/delete/', ex_view.MachineUpdate.as_view(), name="delete-machine"),
-    path('machining/element/<int:pk>/delete/', ex_view.ElementUpdate.as_view(), name="delete-element"),
+    path('machining/material/<int:pk>/delete/', ex_view.MaterialDelete.as_view(), name="delete-material"),
+    path('machining/machine/<int:pk>/delete/', ex_view.MachineDelete.as_view(), name="delete-machine"),
+    path('machining/element/<int:pk>/delete/', ex_view.ElementDelete.as_view(), name="delete-element"),
+    path('machining/element/<int:pk>/add_attachment/', ex_view.AddAttachmentView.as_view(), name="add-attachment"),
+    path('machining/element/<int:pk>/', ex_view.ElementDetailView.as_view(), name="element-detail"),
+    path('machining/element/<int:e_pk>/add_attachment/<int:pk>/delete/', ex_view.AttachmentDelete.as_view(),
+         name="delete-attachment"),
+    path('machining/machine/<int:pk>/', ex_view.MachineDetailView.as_view(), name="machine-detail"),
+    path('machining/material/<int:pk>/', ex_view.MaterialDetailView.as_view(), name="material-detail"),
+    path('machining/service/<int:pk>/', ex_view.ServiceDetailView.as_view(), name="service-detail"),
+    path('machining/tool/<int:pk>/', ex_view.ToolDetailView.as_view(), name="tool-detail"),
+    path('machining/vendor/<int:pk>/', ex_view.VendorDetailView.as_view(), name="vendor-detail"),
+
 ]
 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
