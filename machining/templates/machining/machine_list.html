@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <form method="get">
+                {% if perms.machining.add_machine %}
+                    <th><a class="bi bi-plus-square-fill" style="font-size:22px;" href="{% url 'add-machine' %}" role="button" title="New"></a></th>
+                {% else %}
+                    <th></th>
+                {% endif %}
+                <th>Name{% render_field filter.form.name__icontains class="form-control" %}</th>
+                <th>Manufacturer{% render_field filter.form.manufacturer__icontains class="form-control" %}</th>
+                <th>Type{% render_field filter.form.type__icontains class="form-control" %}</th>
+                <th>Service{% render_field filter.form.service class="form-control" %}</th>
+                <th class="text-right"><button type="submit" class="btn">Search</button></th>
+            </form>
+            </tr>
+            </thead>
+            <tbody>
+            {% for machine in filter.qs %}
+                <tr>
+                    <td>{{  forloop.counter }}</td>
+                    <td>{{ machine.name }}</td>
+                    <td>{{ machine.manufacturer }}</td>
+                    <td>{{ machine.type }}</td>
+                    <td>{{ machine.service }}</td>
+                    <td class="text-right">
+                        {% if perms.machining.view_machine %}
+                            <a class="bi bi-file-bar-graph-fill" href="{% url 'machine-detail' pk=machine.pk %}" role="button" title="Details"></a>
+                        {% endif %}
+                        {% if perms.machining.change_machine %}
+                            <a class="bi bi-pencil-fill" href="{% url 'update-machine' pk=machine.pk %}" role="button" title="Edit"></a>
+                        {% endif %}
+                        {% if perms.machining.delete_machine %}
+                            <a class="bi bi-trash-fill" href="{% url 'delete-machine' pk=machine.pk %}" role="button" title="Remove"></a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+{#        <ul class="pagination">#}
+{#                {% if page_obj.has_previous %}#}
+{#                    <li><a href="?page=1">&laquo; first</a></li>#}
+{#                    <li><a href="?page={{ page_obj.previous_page_number }}">previous</a></li>#}
+{#                {% endif %}#}
+{##}
+{#                {% if page_obj.number > 1 %}#}
+{#                    <li><a href="#">{{ page_obj.number|add:-1 }}</a></li>#}
+{#                {% endif %}#}
+{##}
+{#                    <li class="active"><a href="#">{{ page_obj.number }}</a></li>#}
+{##}
+{#                {% if page_obj.number < page_obj.paginator.num_pages %}#}
+{#                    <li><a href="#">{{ page_obj.number|add:1 }}</a></li>#}
+{#                {% endif %}#}
+{##}
+{#                {% if page_obj.has_next %}#}
+{#                    <li><a href="?page={{ page_obj.next_page_number }}">next</a></li>#}
+{#                    <li><a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>#}
+{#                {% endif %}#}
+{#        </ul>#}
+    </div>
+
+{% endblock %}
