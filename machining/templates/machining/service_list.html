@@ -1,23 +1,27 @@
 {% extends 'base.html' %}
 
+{% load widget_tweaks %}
+
 {% block content %}
     <div class="container">
-        <form method="get">
-            {{ filter.form.as_table }}
-            <button type="submit">Search</button>
-        </form>
         <table class="table table-striped">
             <thead>
             <tr>
-                <th><a class="bi bi-plus-square-fill" style="font-size:22px;" href="{% url 'add-service' %}"
+            <form method="get">
+                {% if perms.machining.add_service %}
+                    <th><a class="bi bi-plus-square-fill" style="font-size:22px;" href="{% url 'add-service' %}"
                        role="button" title="New"></a></th>
-                <th>Name<input type="text" class="form-control" id="name"></th>
-                <th>Address<input type="text" class="form-control" id="address"></th>
-                <th>Phone<input type="text" class="form-control" id="phone"></th>
-                <th>Tax number<input type="text" class="form-control" id="usr"></th>
+                {% else %}
+                    <th></th>
+                {% endif %}
+                <th>Name{% render_field filter.form.name__icontains class="form-control" %}</th>
+                <th>Address{% render_field filter.form.address__icontains class="form-control" %}</th>
+                <th>Phone{% render_field filter.form.phone__icontains class="form-control" %}</th>
+                <th>Tax number{% render_field filter.form.tax_number__icontains class="form-control" %}</th>
                 <th class="text-right">
-                    <button type="button" class="btn">Search</button>
+                    <button type="submit" class="btn">Search</button>
                 </th>
+            </form>
             </tr>
             </thead>
             <tbody>
@@ -29,38 +33,44 @@
                     <td>{{ service.phone }}</td>
                     <td>{{ service.tax_number }}</td>
                     <td class="text-right">
-                        <a class="bi bi-file-bar-graph-fill" href="{% url 'service-detail' pk=service.pk %}"
+                        {% if perms.machining.view_service %}
+                            <a class="bi bi-file-bar-graph-fill" href="{% url 'service-detail' pk=service.pk %}"
                            role="button" title="Details"></a>
-                        <a class="bi bi-pencil-fill" href="{% url 'update-service' pk=service.pk %}" role="button"
+                        {% endif %}
+                        {% if perms.machining.change_service %}
+                            <a class="bi bi-pencil-fill" href="{% url 'update-service' pk=service.pk %}" role="button"
                            title="Edit"></a>
-                        <a class="bi bi-trash-fill" href="{% url 'delete-service' pk=service.pk %}" role="button"
+                        {% endif %}
+                        {% if perms.machining.delete_service %}
+                            <a class="bi bi-trash-fill" href="{% url 'delete-service' pk=service.pk %}" role="button"
                            title="Remove"></a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-        <ul class="pagination">
-                {% if page_obj.has_previous %}
-                    <li><a href="?page=1">&laquo; first</a></li>
-                    <li><a href="?page={{ page_obj.previous_page_number }}">previous</a></li>
-                {% endif %}
-
-                {% if page_obj.number > 1 %}
-                    <li><a href="#">{{ page_obj.number|add:-1 }}</a></li>
-                {% endif %}
-
-                    <li class="active"><a href="#">{{ page_obj.number }}</a></li>
-
-                {% if page_obj.number < page_obj.paginator.num_pages %}
-                    <li><a href="#">{{ page_obj.number|add:1 }}</a></li>
-                {% endif %}
-
-                {% if page_obj.has_next %}
-                    <li><a href="?page={{ page_obj.next_page_number }}">next</a></li>
-                    <li><a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
-                {% endif %}
-        </ul>
+{#        <ul class="pagination">#}
+{#                {% if page_obj.has_previous %}#}
+{#                    <li><a href="?page=1">&laquo; first</a></li>#}
+{#                    <li><a href="?page={{ page_obj.previous_page_number }}">previous</a></li>#}
+{#                {% endif %}#}
+{##}
+{#                {% if page_obj.number > 1 %}#}
+{#                    <li><a href="#">{{ page_obj.number|add:-1 }}</a></li>#}
+{#                {% endif %}#}
+{##}
+{#                    <li class="active"><a href="#">{{ page_obj.number }}</a></li>#}
+{##}
+{#                {% if page_obj.number < page_obj.paginator.num_pages %}#}
+{#                    <li><a href="#">{{ page_obj.number|add:1 }}</a></li>#}
+{#                {% endif %}#}
+{##}
+{#                {% if page_obj.has_next %}#}
+{#                    <li><a href="?page={{ page_obj.next_page_number }}">next</a></li>#}
+{#                    <li><a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>#}
+{#                {% endif %}#}
+{#        </ul>#}
     </div>
 
 {% endblock %}

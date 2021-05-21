@@ -26,6 +26,7 @@ class ServiceFilter(django_filters.FilterSet):
 
 class MachineFilter(django_filters.FilterSet):
     service = django_filters.ModelChoiceFilter(queryset=Service.objects.all())
+
     class Meta:
         model = Machine
         fields = {
@@ -38,6 +39,7 @@ class MachineFilter(django_filters.FilterSet):
 
 class ToolFilter(django_filters.FilterSet):
     vendor = django_filters.ModelChoiceFilter(queryset=Vendor.objects.all())
+
     class Meta:
         model = Tool
         fields = {
@@ -62,6 +64,7 @@ class MaterialFilter(django_filters.FilterSet):
 class ElementFilter(django_filters.FilterSet):
     material = django_filters.ModelChoiceFilter(queryset=Material.objects.all())
     machine = django_filters.ModelChoiceFilter(queryset=Machine.objects.all())
+
     class Meta:
         model = Element
         fields = {
@@ -70,4 +73,3 @@ class ElementFilter(django_filters.FilterSet):
             'material': [],
             'machine': [],
         }
-

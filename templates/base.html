@@ -25,6 +25,7 @@
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Machining
                 <span class="caret"></span>
             </a>
+            {% if request.user.is_authenticated %}
             <ul class="dropdown-menu">
                 <li><a tabindex="-1" href="{% url 'element-list' %}">Element</a></li>
                 <li><a tabindex="-1" href="{% url 'machine-list' %}">Machine</a></li>
@@ -33,29 +34,22 @@
                 <li><a tabindex="-1" href="{% url 'service-list' %}">Service</a></li>
                 <li><a tabindex="-1" href="{% url 'vendor-list' %}">Vendor</a></li>
             </ul>
+            {% endif %}
         </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Login <span
-                class="glyphicon glyphicon-log-in"></span></a>
-            <div class="dropdown-menu">
-                <form id="formLogin" class="form container-fluid">
-                    <div class="form-group">
-                        <label for="usr">Name:</label>
-                        <input type="text" class="form-control" id="usr">
-                    </div>
-                    <div class="form-group">
-                        <label for="pwd">Password:</label>
-                        <input type="password" class="form-control" id="pwd">
-                    </div>
-                    <button type="button" id="btnLogin" class="btn btn-block">Login</button>
-                </form>
-                <div class="container-fluid">
-                    <br>
-                    <a class="small" href="#">Forgot password?</a>
-                </div>
-            </div>
+        {% if request.user.is_authenticated %}
+         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ request.user.first_name }} {{ request.user.last_name }} </a>
+            <ul class="dropdown-menu">
+{#                <li><a tabindex="-1" href="#">Change password</a></li>#}
+                <li><a tabindex="-1" href="{% url 'logout' %}">Logout</a></li>
+            </ul>
         </li>
+        {% else %}
+        <li class="dropdown"><a href="{% url 'login' %}">Login<span
+                class="glyphicon glyphicon-log-in"></span></a>
+        </li>
+        {% endif %}
     </ul>
 </nav>
 

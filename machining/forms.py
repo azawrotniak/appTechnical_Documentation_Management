@@ -1,6 +1,9 @@
 from django import forms
+from django.contrib.auth import get_user_model, authenticate
 
 from .models import Attachment, Element, Machine, Material, Service, Tool, Vendor
+
+User = get_user_model()
 
 
 class ServiceForm(forms.ModelForm):
@@ -82,6 +85,7 @@ class ElementForm(forms.ModelForm):
             'material': forms.Select(attrs={'class': 'form-control'}),
             'machine': forms.Select(attrs={'class': 'form-control'}),
             'tool': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'model3D': forms.ClearableFileInput(attrs={'multiple': True}),
 
         }
 
@@ -95,3 +99,20 @@ class AttachmentForm(forms.ModelForm):
             'description': forms.TextInput(attrs={'class': 'form-control'}),
             'type': forms.Select(attrs={'class': 'form-control'}),
         }
+
+
+class LoginForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'password']
+        widgets = {
+            'password': forms.PasswordInput,
+        }
+
+    def clean(self):
+        cd = super().clean()
+        username = cd['username']
+        password = cd['password']
+        user = authenticate(username=username, password=password)
+        if user is None:
+            self.add_error(None, 'Data is incorrect')
