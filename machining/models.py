@@ -18,6 +18,9 @@ STATUS = (
 
 
 class Service(models.Model):
+    """
+    The model represents the service company
+    """
     name = models.CharField(max_length=64)
     address = models.CharField(max_length=255)
     phone = models.IntegerField(blank=True)
@@ -28,6 +31,9 @@ class Service(models.Model):
 
 
 class Vendor(models.Model):
+    """
+    The model represents a company that supplies machines, tools, materials, etc.
+    """
     name = models.CharField(max_length=64)
     address = models.CharField(max_length=255)
     phone = models.IntegerField(blank=True, null=True)
@@ -38,6 +44,9 @@ class Vendor(models.Model):
 
 
 class Machine(models.Model):
+    """
+    The model represents a CNC machine.
+    """
     name = models.CharField(max_length=64)
     manufacturer = models.CharField(max_length=64)
     type = models.IntegerField(choices=TYPE_MACHINE)
@@ -50,6 +59,9 @@ class Machine(models.Model):
 
 
 class Tool(models.Model):
+    """
+    The model represents the tools needed for machining, e.g. drills, cutters, drills, chamfers, etc.
+    """
     name = models.CharField(max_length=64)
     status = models.IntegerField(choices=STATUS, default=1, blank=True)
     kind = models.CharField(max_length=32)
@@ -63,6 +75,9 @@ class Tool(models.Model):
 
 
 class Material(models.Model):
+    """
+    The model represents the material needed to manufacture the element eg. steel, aluminium etc.
+    """
     name = models.CharField(max_length=64)
     symbol = models.CharField(max_length=32)
 
@@ -75,6 +90,9 @@ class Material(models.Model):
 
 
 class Element(models.Model):
+    """
+    The model represents the element that is being manufactured.
+    """
     name = models.CharField(max_length=64)
     version = models.IntegerField()
     material = models.ForeignKey(Material, on_delete=models.CASCADE)
@@ -87,6 +105,9 @@ class Element(models.Model):
 
 
 class Attachment(models.Model):
+    """
+    The model represents an attachment which is a help set of information to create an element
+    """
     description = models.CharField(max_length=64, blank=True)
     type = models.IntegerField(choices=TYPE_DOCUMENT, blank=True)
     file = models.FileField(upload_to='documents/', blank=True)
