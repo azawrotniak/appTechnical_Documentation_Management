@@ -69,7 +69,7 @@
     </div>
 
     <div class="col-sm-7 sidenav">
-        <canvas id="c"></canvas>
+        <canvas id="c" height="600" width="1120"></canvas>
     </div>
 {% endblock %}
 
@@ -119,8 +119,8 @@ function main() {
   }
 
   function frameArea(sizeToFitOnScreen, boxSize, boxCenter, camera) {
-    const halfSizeToFitOnScreen = sizeToFitOnScreen * 0.5;
-    const halfFovY = THREE.MathUtils.degToRad(camera.fov * .5);
+    const halfSizeToFitOnScreen = sizeToFitOnScreen * 2;
+    const halfFovY = THREE.MathUtils.degToRad(camera.fov * 5);
     const distance = halfSizeToFitOnScreen / Math.tan(halfFovY);
     // compute a unit vector that points in the direction the camera is now
     // in the xz plane from the center of the box
