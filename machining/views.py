@@ -89,7 +89,6 @@ class AddElementView(LoginRequiredMixin, PermissionRequiredMixin, View):
 class VendorList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     login_url = reverse_lazy('login')
     permission_required = 'machining.view_vendor'
-    paginate_by = 15
     model = Vendor
 
     def get_context_data(self, **kwargs):
@@ -101,7 +100,6 @@ class VendorList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 class ServiceList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     login_url = reverse_lazy('login')
     permission_required = 'machining.view_service'
-    paginate_by = 15
     model = Service
 
     def get_context_data(self, **kwargs):
@@ -113,7 +111,6 @@ class ServiceList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 class ToolList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     login_url = reverse_lazy('login')
     permission_required = 'machining.view_tool'
-    paginate_by = 15
     model = Tool
 
     def get_context_data(self, **kwargs):
@@ -125,7 +122,6 @@ class ToolList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 class MaterialList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     login_url = reverse_lazy('login')
     permission_required = 'machining.view_material'
-    paginate_by = 15
     model = Material
 
     def get_context_data(self, **kwargs):
@@ -137,7 +133,6 @@ class MaterialList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 class MachineList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     login_url = reverse_lazy('login')
     permission_required = 'machining.view_machine'
-    paginate_by = 15
     model = Machine
 
     def get_context_data(self, **kwargs):
@@ -149,7 +144,6 @@ class MachineList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 class ElementList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     login_url = reverse_lazy('login')
     permission_required = 'machining.view_element'
-    paginate_by = 15
     model = Element
 
     def get_context_data(self, **kwargs):
